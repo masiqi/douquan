@@ -1,0 +1,26 @@
+{% load base %}
+deal
+<a href="{% myurl www.douquan.com www_deal city.abbreviation deal.id %}">{{ deal.name }}</a>
+<a href="{% myurl www.douquan.com www_category city.abbreviation deal.category.id %}">{{ deal.category.name }}</a>
+local:
+{% for local in deal.local.values %}
+<a href="{% myurl www.douquan.com www_local city.abbreviation local.name %}">{{ local.name }}</a>
+{% endfor %}
+{% if deal.tags %}
+<p>Tags:
+{% load tagging_tags %}
+{% tags_for_object deal as tags %}
+{% for tag in tags %}
+<a href="{% myurl www.douquan.com www_tag city.abbreviation tag.id %}">{{ tag }}</a>
+{% endfor %}
+</p>
+{% endif %}
+<a href="{% myurl www.douquan.com www_site city.abbreviation deal.site.name %}">{{ deal.site.name }}</a>
+{% for company in deal.companies.values %}
+<a href="{% myurl www.douquan.com www_company city.abbreviation company.id %}">{{ company.name }}</a>
+{% endfor %}
+<form action="{% myurl www.douquan.com www_deal_transfer city.abbreviation deal.id %}" method="post" id="commentform">
+{{ form.as_p }}
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+</p>
+</form>

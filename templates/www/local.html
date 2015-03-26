@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load base %}
+{% load deal_tag %}
+
+{% block feed %}
+<link href="{% myurl www.douquan.com feed_local city.abbreviation local.id %}" rel="alternate" title="订阅更新" type="application/rss+xml" />
+{% endblock %}
+{% block mainbody %}
+<div class="center clearfix">
+	<div class="center01 fl">
+	{% for deal in deals %}
+	<div class="center_lf fl {% if forloop.first %}{% else %}mg_top10{% endif %}">
+	<p class="bian_lf fl"></p>
+	<div class="bian_zh fl">
+		<div class="pic fl mg_top10"><img width="242" height="147" src="{{ deal.logo }}"></div>	
+		<div class="jiage fl">
+		   <p><a href="{% myurl www.douquan.com www_deal city.abbreviation deal.id %}"><span>{{ deal.site }}：</span>{{ deal.name }}</a></p>
+		   <p class="bq">
+		   分类：<a href="{% myurl www.douquan.com www_category city.abbreviation deal.category.id %}">{{ deal.category }}</a>
+		   {% if deal.tags %}
+		   {% load tagging_tags %}
+		   {% tags_for_object deal as tags %}
+		    <span>标签：
+		   {% for tag in tags %}
+			<a href="{% myurl www.douquan.com www_tag city.abbreviation tag.id %}">{{ tag }}</a>
+		   {% endfor %}
+		   </span>
+		   {% endif %}
+		   </p>
+		   <p class="gm">已有<span>2290</span>人购买</p>
+		   <dl>
+		   <dt>现价：<span>¥{{ deal.current_price }}</span></dt>
+		   <dd> 折扣：<span>{{ deal.get_discount|floatformat:1 }}折</span></dd>
+		   </dl>
+		   <dl>
+		   <dt>原价：<span>¥{{ deal.original_price }}</span></dt>
+		   <dd> 节省：<span>¥{{ deal.get_saving|floatformat:2 }}</span></dd>
+		   </dl>
+		</div>
+	</div>
+	<p class="bian_rt fl clearfix"></p>
+	</div>
+	{% endfor %}
+	</div>
+	<div class="center_rt mg_lf10 fl">
+	<p class="rem_lf">热门地点</p>
+	<div class="diqu"><div class="shu">
+	{% city_locals city.id locals %}
+	{% for local in locals %}
+	<a href="{% myurl www.douquan.com www_local city.abbreviation local %}">{{ local.name }}</a>
+	{% endfor %}
+	</div></div>
+	<p class="rem_rt"></p>
+	</div>
+	<div class="center_rt mg_lf10 fl">
+	<p class="rem_lf">分类</p>
+	<div class="diqu"><div class="shu">
+	{% categories categories %}
+	{% for category in categories %}
+	<a href="{% myurl www.douquan.com www_category city.abbreviation category.id %}">{{ category.name }}</a>
+	{% endfor %}
+	</div></div>
+	<p class="rem_rt"></p>
+	</div>
+	<div class="center_rt mg_lf10 fl">
+	<p class="rem_lf">标签</p>
+	<div class="diqu"><div class="shu">
+	{% tags tags%}
+	{% for tag in tags %}
+	<a href="{% myurl www.douquan.com www_tag city.abbreviation tag.id %}">{{ tag.name }}</a>
+	{% endfor %}
+	</div></div>
+	<p class="rem_rt"></p>
+	</div>
+</div>
+{% endblock %}

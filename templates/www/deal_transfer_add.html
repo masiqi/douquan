@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load base %}
+
+{% block mainbody %}
+<div class="center clearfix">
+<div class="my_container">
+	<div class="subject">
+		<span>添加二手团购买卖</span>
+	</div>
+<div class="add_form">
+{% if form.price %}
+<form action="" method="POST">
+<div class="row">
+<label>团购标题</label>{{ form.name }}
+{% if form.name.errors %}
+<div class="error gr">{{ form.name.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>分类</label>{{ form.category }}
+{% if form.category.errors %}
+<div class="error gr">{{ form.category.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>卖出价格</label>{{ form.price }}
+{% if form.price.errors %}
+<div class="error gr">{{ form.price.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>求购、转让</label>{{ form.type }}
+{% if form.type.errors %}
+<div class="error gr">{{ form.type.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>数量</label>{{ form.count }}
+{% if form.count.errors %}
+<div class="error gr">{{ form.count.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>详细描述</label>{{ form.detail }}
+</div>
+{% if form.detail.errors %}
+<div class="row">
+<label>  </label>
+<div class="error gr">{{ form.detail.errors }}</div>
+</div>
+{% endif %}
+<div class="row">
+<label>联系方式</label>{{ form.contact }}
+{% if form.contact.errors %}
+<div class="error gr">{{ form.contact.errors }}</div>
+{% endif %}
+<div class="tips gr">请留下详细联系方式：）</div>
+</div>
+<div class="clearfix"></div>
+<div class="row" style="margin-top: 20px">
+{{ form.deal }}
+{{ form.step }}
+{{ form.city }}
+{{ form.status }}
+<input type="submit" value="保存" class="bat01" style="margin-left: 80px;"/>
+</div>
+</form>
+{% else %}
+<form action="" method="POST">
+<div class="row">
+<label>团购标题</label>{{ form.name }}
+{% if form.name.errors %}
+<div class="error gr">{{ form.name.errors }}</div>
+{% endif %}
+</div>
+<div class="clearfix"></div>
+<div class="row" style="margin-top: 20px">
+{{ form.step }}
+<input type="submit" value="下一步" class="bat01" style="margin-left: 80px;"/>
+</div>
+</form>
+{% endif %}
+{% if deal_suggests %}
+	<div class="subject" style="margin-top: 20px;">
+		<span>您是否在转让\求购以下团购？</span>
+	</div>
+<div class="info">
+为了提高信息的准确性，请您在以下推荐的列表中选择您打算转让\求购的团购。如果未找到，您可以继续填写上面的表单。
+</div>
+<ul class="suggest_list">
+{% for deal_suggest in deal_suggests %}
+<li><a class="red" href="{% myurl www.douquan.com www_site city deal_suggest.site %}">【{{ deal_suggest.site.name }}】</a><a class="blue" href="{% myurl www.douquan.com www_deal_transfer_add city %}?deal_id={{ deal_suggest.id }}">{{ deal_suggest.name }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+</div>
+</div>
+</div>
+{% endblock %}

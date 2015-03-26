@@ -1,0 +1,69 @@
+{% load base %}
+<div class="soso">
+<div class="soso_nav">
+{% ifequal status 1 %}
+<ul>
+{% ifequal is_today None %}
+<li><a class="black active" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}">今日所有团购</a></li>
+<li><a class="black" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today=1">今日新增团购</a></li>
+{% else %}
+<li><a class="black" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}">今日所有团购</a></li>
+<li><a class="black active" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today=1">今日新增团购</a></li>
+{% endifequal %}
+</ul>
+{% endifequal %}
+</div>
+<div class="nav_rt">
+<ul>
+{% if order != None %}
+
+{% ifequal order "current_price" %}
+{% ifequal status 1 %}
+<li class="jiage"><a class="bl act_up" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-volunteer"><span>销量</span></a></li>
+{% else %}
+<li class="jiage"><a class="bl act_up" href="{% myurl app.douquan.com kaixin001_city_list city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_list city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% endifequal %}
+{% ifequal order "-current_price" %}
+{% ifequal status 1 %}
+<li class="jiage"><a class="bl act_down" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-volunteer"><span>销量</span></a></li>
+{% else %}
+<li class="jiage"><a class="bl act_down" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% endifequal %}
+{% ifequal order "volunteer" %}
+{% ifequal status 1 %}
+<li class="jiage"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl act_up" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-volunteer"><span>销量</span></a></li>
+{% else %}
+<li class="jiage"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl act_up" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% endifequal %}
+{% ifequal order "-volunteer" %}
+{% ifequal status 1 %}
+<li class="jiage"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl act_down" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=volunteer"><span>销量</span></a></li>
+{% else %}
+<li class="jiage"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl act_down" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% endifequal %}
+
+{% else %}
+{% ifequal status 1 %}
+<li class="jiage"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-volunteer"><span>销量</span></a></li>
+{% else %}
+<li class="jiage"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl" href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}?is_today={{ is_today|default:"" }}&order=-volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% endif %}
+</ul>
+</div>
+<div style="clear:both;"></div>
+</div>

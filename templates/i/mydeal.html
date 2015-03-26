@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load base %}
+
+{% load tabs %}
+{% block navigation %}
+{% activetab "topnav" "mydeal" %}
+{{ block.super }}
+{% endblock %}
+
+{% block mainbody %}
+<div class="center clearfix">
+
+<div id="dialog" class="biaoqian" style="display:none;">
+<div class="bq_nav">
+<div class="tj"><a id="dialog_close" class="but02">x</a></div>
+<form action="{% myurl www.douquan.com www_write_review %}" method="POST">
+<ul>
+<li class="zs">已有<span>110</span>人顶</li>
+<li>标签（多个标签用空格分隔）：</li>
+<li><input type="text" class="input" id="id_tags" name="tag"></li>
+<li class="gr">常用标签:</li>
+	<ul class="recommend_tags" id="id_recommend_tags"></ul>
+<li class="clearfix" style="margin-bottom: 10px;"></li>
+<li>简短附注：</li>
+<li>
+  <textarea type="text" class="input01" name="comment"></textarea>
+</li>
+<li class="juzh">
+	<input type="hidden" id="r_act" name="act" value="paid" />
+	<input type="hidden" id="r_deal_id" name="deal_id" value="" />
+	<input type="hidden" id="r_mydeal_id" name="mydeal_id" value="" />
+	<input type="hidden" id="r_type" name="vote" value="0" />
+	<input type="submit" class="baocun" name="submit" value="" /><input id="dialog_cancel" type="button" class="quxiao" name="cancel" />
+</li>
+</ul>
+</form>
+</div>
+</div>
+<div id="warning" class="biaoqian" style="display:none;">
+<div class="bq_nav">
+<div class="tj"><input id="warning_close" type="" class="but02" name=""></div>
+<div id="warning_msg">
+正在载入，请稍等...
+</div>
+</div>
+</div>	
+
+<div class="my_container">
+	<div class="subject">
+		<span>我的团购</span>
+		<a class="red" href="{% myurl i.douquan.com i_mydeal_add %}">添加</a>
+	</div>
+<table class="deal_list">
+<colgroup>
+    <col width="45%">
+    <col width="10%">
+    <col width="10%">
+    <col width="10%">
+    <col width="10%">
+    <col width="15%">
+</colgroup>
+<tr>
+<th>标题</th>
+<th>帐号</th>
+<th>有效期</th>
+<th>预约时间</th>
+<th>买入价</th>
+<th>操作</th>
+</tr>
+{% for mydeal in mydeals %}
+<tr>
+<td class="title">
+	{% if mydeal.deal %}
+	<a class="red" href="{% myurl www.douquan.com www_site city.abbreviation mydeal.deal.site %}">【{{ mydeal.deal.site.name }}】</a>
+	<a class="bluew" href="{% myurl www.douquan.com www_deal city.abbreviation mydeal.deal.id %}">{{ mydeal.name }}</a>
+	{% else %}
+	<a class="red" href="{% myurl i.douquan.com i_mydeal_edit mydeal.id %}">【{{ mydeal.site }}】</a>
+	<a class="bluew" href="{% myurl i.douquan.com i_mydeal_edit mydeal.id %}">{{ mydeal.name }}</a>
+	{% endif %}
+</td>
+<td class="gr">
+{% if mydeal.account %}
+{{ mydeal.account }}
+{% else %}
+<a class="gr" href="{% myurl i.douquan.com i_mydeal_edit mydeal.id %}">添加帐号</a>
+{% endif %}
+</td>
+<td class="gr">
+{% if mydeal.deadline %}
+{{ mydeal.deadline|date:"Y-m-d" }}
+{% else %}
+<a class="gr" href="{% myurl i.douquan.com i_mydeal_edit mydeal.id %}">添加有效期</a>
+{% endif %}
+</td>
+<td class="gr">
+{% if mydeal.reserve %}
+{{ mydeal.reserve|date:"Y-m-d" }}
+{% else %}
+<a class="gr" href="{% myurl i.douquan.com i_mydeal_edit mydeal.id %}">添加预约时间</a>
+{% endif %}
+</td>
+<td class="gr">{{ mydeal.price }} 元</td>
+<td>
+<a class="red" href="{% myurl i.douquan.com i_mydeal_del mydeal.id %}" onclick="return confirm('是否删除？')">删除</a>
+<a class="red" href="{% myurl i.douquan.com i_mydeal_edit mydeal.id %}">修改</a>
+{% ifequal mydeal.status 1 %}
+{% if mydeal.deal %}
+<a title="标记为已使用" class="red" href="javascript:review_dialog('dialog', {{ mydeal.deal.id }}, {{ mydeal.id }}, 2, 'used')">未使用</a>
+{% else %}
+<a title="标记为已使用" class="red" href="{% myurl i.douquan.com i_mydeal_change_status mydeal.id %}">未使用</a>
+{% endif %}
+{% else %}
+<span class="gr">已使用</span>
+{% endifequal %}
+</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+{% endblock %}

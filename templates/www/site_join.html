@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load base %}
+
+{% block mainbody %}
+<div class="center clearfix">
+
+<div class="my_container">
+	<div class="subject">
+		<span>团购网站收录</span>
+	</div>
+<div class="info">
+如果您的网站希望被都全网收录，请填写如下信息。我们一般会在３个工作日内审核。 请注意：一旦收录，您填写的信息将会被都全网编辑后公开。信息的完整填写将有助于提高收录速度。
+</div>
+<div class="add_form">
+<form action="" method="POST">
+<div class="row">
+<label>网站名称</label>{{ form.site_name }}
+{% if form.site_name.errors %}
+<div class="error gr">{{ form.site_name.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>网站域名</label>{{ form.site_domain }}
+{% if form.site_domain.errors %}
+<div class="error gr">{{ form.site_domain.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>上线时间</label>{{ form.online_date }}
+{% if form.online_date.errors %}
+<div class="error gr">{{ form.online_date.errors }}</div>
+{% endif %}
+<div class="tips gr">例如：2010-07-01</div>
+</div>
+<div class="row">
+<label>联系人</label>{{ form.owner }}
+{% if form.owner.errors %}
+<div class="error gr">{{ form.owner.errors }}</div>
+{% endif %}
+<div class="tips gr">请填写网站的负责人或者联系人姓名</div>
+</div>
+<div class="row">
+<label>电子邮件</label>{{ form.email }}
+{% if form.email.errors %}
+<div class="error gr">{{ form.email.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>即时通讯</label>{{ form.im }}
+{% if form.im.errors %}
+<div class="error gr">{{ form.im.errors }}</div>
+{% endif %}
+<div class="tips gr">请填写QQ或MSN等即时通讯联系方式</div>
+</div>
+<div class="row">
+<label>电话</label>{{ form.phone }}
+{% if form.phone.errors %}
+<div class="error gr">{{ form.phone.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>通讯地址</label>{{ form.address }}
+{% if form.address.errors %}
+<div class="error gr">{{ form.address.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>交换链接</label>{{ form.exchange }}
+{% if form.exchange.errors %}
+<div class="error gr">{{ form.exchange.errors }}</div>
+{% endif %}
+<div class="tips gr">您是否愿意与都全网交换链接</div>
+</div>
+<div class="clearfix"></div>
+<div class="row" style="margin-top: 20px">
+<input type="submit" value="提交" class="bat01" style="margin-left: 80px;"/>
+{% ifequal result 1 %}
+<div class="msg">信息已提交成功，感谢您的支持！</div>
+{% endifequal %}
+</div>
+</form>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

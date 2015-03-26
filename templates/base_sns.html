@@ -1,0 +1,132 @@
+{% load base %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+{% block title %}
+<title>都全团购网-分享都全 分享快乐</title>
+{% endblock %}
+
+{% block feed %}
+{% endblock %}
+
+{% block keywords %}
+<meta name="keywords" content="都全网,团购,打折,优惠券" />
+{% endblock %}
+
+{% block description %}
+<meta name="description" content="都全网是团购导航网站，致力于提供精品团购、促销、打折消费信息，每天提供精选的餐饮、休闲、娱乐等特色商家，只要团购人数达到最低团购人数，就能享受都全网为你提供的超低折扣，丰富的团购信息，尽在都全网。" />
+{% endblock %}
+
+<link href="/site_media/css/douquan_style.css" rel="stylesheet" type="text/css" />
+{% block style %}{% endblock %}
+<script type="text/javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/site_media/js/douquan_base.js"></script>
+</head>
+<body>
+<div id="zhengti01">
+<div id="zhengti_sns">
+	<div class="head">
+	<a href="http://www.douquan.com" title="都全团购网{{ city.name }}站-分享都全分享快乐"><img width="245" height="46" src="/site_media/images/dq_logo.gif"></a>
+	<div class="city_sns fl">
+	{% block city_list %}
+	{% if city.name %}
+	  <ul>
+	  <li class="bj"><a class="#">{{ city.name }}</a></li>
+	  <li class="line"><a href="#" id="change_city_link" tabindex="1">切换城市</a></li>
+	  </ul>
+		<div id="city_list" class="city_list" style="display: none;">
+		    <ul>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "bj" %}">北京</a></li>
+		    <li><a class="bj_01" href="{% myurl app.douquan.com kaixin001_city_index "sh" %}">上海</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "wh" %}">武汉</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "gz" %}">广州</a></li>
+		    <li class="last"><a href="{% myurl app.douquan.com kaixin001_city_index "sz" %}">深圳</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "hz" %}">杭州</a></li>
+		    <li><a class="bj_01" href="{% myurl app.douquan.com kaixin001_city_index "tj" %}">天津</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "cd" %}">成都</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "qd" %}">青岛</a></li>
+		    <li class="last"><a href="{% myurl app.douquan.com kaixin001_city_index "nj" %}">南京</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "zz" %}">郑州</a></li>
+		    <li><a class="bj_01" href="{% myurl app.douquan.com kaixin001_city_index "hf" %}">合肥</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "xa" %}">西安</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "wx" %}">无锡</a></li>
+		    <li class="last"><a href="{% myurl app.douquan.com kaixin001_city_index "nc" %}">南昌</a></li>
+		 <li><a href="{% myurl app.douquan.com kaixin001_city_index "dl" %}">大连</a></li>
+		    <li><a class="bj_01" href="{% myurl app.douquan.com kaixin001_city_index "dy" %}">东营</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "gy" %}">贵阳</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "lz" %}">兰州</a></li>
+		    <li class="last"><a href="{% myurl app.douquan.com kaixin001_city_index "nn" %}">南宁</a></li>
+		 <li><a href="{% myurl app.douquan.com kaixin001_city_index "km" %}">昆明</a></li>
+		    <li><a class="bj_01" href="{% myurl app.douquan.com kaixin001_city_index "fz" %}">福州</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "dq" %}">大庆</a></li>
+		    <li><a href="{% myurl app.douquan.com kaixin001_city_index "cq" %}">重庆</a></li>
+		    <li class="last"><a href="{% myurl app.douquan.com kaixin001_city_index "sz1" %}">苏州</a></li>
+		    </ul>
+		    <div class="othercity"><a href="{% myurl app.douquan.com kaixin001_index %}?choose=1">其他城市?</a></div>
+		  </div>
+		  {% endif %}
+		  {% endblock %}  
+	</div>
+	<!--soso开始-->
+	<div class="soso_sns">
+	<div class="soso_sh">
+		<form target="" action="{% myurl app.douquan.com kaixin001_search_post %}" method="POST">
+			<input type="text" class="nav" name="search_keyword" id="search_keyword" value="{{ keyword }}"/>
+			<input type="submit" value="" class="btn" name="submit" />
+		</form>
+	</div><!--soso结束-->
+	<div class="soso_xia">
+	<ul>
+	<li class="ss"></li>
+	<li><a title="练歌房" href="{% myurl app.douquan.com kaixin001_search '练歌房' %}">练歌房</a></li>
+	<li><a title="玉米" href="{% myurl app.douquan.com kaixin001_search '涮肉' %}">涮肉</a></li>
+	<li><a title="美体" href="{% myurl app.douquan.com kaixin001_search '美容' %}">美容</a></li>
+	<li><a title="瘦身" href="{% myurl app.douquan.com kaixin001_search '烤鱼' %}">烤鱼</a></li>
+	<li><a title="鱼" href="{% myurl app.douquan.com kaixin001_search '电影' %}">电影</a></li>
+	<li><a title="美发" href="{% myurl app.douquan.com kaixin001_search '化妆品' %}">化妆品</a></li>
+	<li><a title="美食" href="{% myurl app.douquan.com kaixin001_search '美食' %}">美食</a></li>
+	</ul>
+	</div>
+	</div>
+	</div>
+	<div class="dh">
+	{% load tabs %}
+	{% block navigation %}
+	  <ul>
+	  <li class="{% ifactivetab "topnav" "current" %}lk{% else %}{% endifactivetab %}"><a href="{% myurl app.douquan.com kaixin001_city_index city.abbreviation|default:"bj" %}">今日团购</a></li>
+	  <li class="{% ifactivetab "topnav" "history" %}lk{% else %}{% endifactivetab %}"><a href="{% myurl app.douquan.com kaixin001_city_list city.abbreviation|default:"bj" %}">往期团购</a></li>
+	  </ul>
+	{% endblock %}
+	</div>
+	<div class="cl"></div>
+	{% block mainbody %}This is mainbody{% endblock %}
+	<div class="cl"></div>
+	<div class="bottom">
+	<ul>
+	<li><a href="http://www.douquan.com/about/">关于我们</a>　|</li>
+	<li><a href="{% myurl www.douquan.com www_site_join %}">团购网站收录</a>　|</li>
+	<li><a href="http://www.douquan.com/links/">友情链接</a>　|</li>
+	<li><a href="http://www.douquan.com/business/">商务合作</a>　|</li>
+	<li><a href="http://www.douquan.com/contact/">联系我们</a></li>
+	</ul>
+	<p>&copy; 2010 Douquan,Inc. 京ICP备10047267号</p>
+	</div>
+</div>
+</div>
+</body>
+{% block run_script %}
+{% endblock %}
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17294157-1']);
+  _gaq.push(['_setDomainName', '.douquan.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</html>

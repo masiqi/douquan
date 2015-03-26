@@ -1,0 +1,60 @@
+{% extends "base_sns.html" %}
+
+{% load base %}
+{% load deal_tag %}
+{% load pagination_tags %}
+
+{% block title %}
+<title>{{ category.name }}团购、打折、优惠券信息-都全团购网{{ city.name }}站</title>
+{% endblock %}
+
+{% block keywords %}
+<meta name="keywords" content="{{ category.name }}团购, {{ category.name }}打折,{{ category.name }}优惠券,都全团购网{{ city.name }}站" />
+{% endblock %}
+
+{% block description %}
+<meta name="description" content="都全团购网北京站为您提供{{ category.name }}团购、打折、优惠券相关信息，{{ category.name }}团购内容丰富，折扣超低，更多{{ category.name }}精品团购优惠内容，尽在都全团购网{{ city.name }}站" />
+{% endblock %}
+
+{% block mainbody %}
+<div class="center clearfix">
+	<div class="center01 fl">
+<div class="soso">
+<div class="nav_rt">
+<ul>
+{% if order != None %}
+
+{% ifequal order "current_price" %}
+<li class="jiage"><a class="bl act_down" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=-current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% ifequal order "-current_price" %}
+<li class="jiage"><a class="bl act_up" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% ifequal order "volunteer" %}
+<li class="jiage"><a class="bl" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl act_down" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=-volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% ifequal order "-volunteer" %}
+<li class="jiage"><a class="bl" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl act_up" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=volunteer"><span>销量</span></a></li>
+{% endifequal %}
+
+{% else %}
+<li class="jiage"><a class="bl" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="bl" href="{% myurl app.douquan.com kaixin001_category category.id %}?order=volunteer"><span>销量</span></a></li>
+{% endif %}
+</ul>
+</div>
+<div style="clear:both;"></div>
+</div>
+
+	{% autopaginate deals 20 %}
+	{% for deal in deals %}
+	{% include 'kaixin001/deal_snippet.html' %}
+	{% endfor %}
+	{% paginate %}
+	</div>
+</div>
+{% endblock %}

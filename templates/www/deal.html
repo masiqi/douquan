@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% load base %}
+{% load deal_tag %}
+{% load string %}
+
+{% load tabs %}
+{% block navigation %}
+{% ifequal deal.status 1 %}
+{% activetab "topnav" "current" %}
+{% else %}
+{% activetab "topnav" "history" %}
+{% endifequal %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}
+<title>{{ deal.name }}-都全团购网{{ city.name }}站</title>
+{% endblock %}
+
+{% block keywords %}
+<meta name="keywords" content="{{ deal.name }}, 都全团购网{{ city.name }}站" />
+{% endblock %}
+
+{% block description %}
+<meta name="description" content="{{ deal.name }},{{ deal.detail|cutChinese:80 }}" />
+{% endblock %}
+
+{% block style %}
+<style type="text/css">
+body {
+_background-image: url(about:blank);     /*用浏览器空白页面作为背景*/
+_background-attachment: fixed;             /* prevent screen flash in IE6 确保滚动条滚动时，元素不闪动*/
+}
+</style>
+{% endblock %}
+
+{% block mainbody %}
+<div class="center clearfix">
+<div class="center02 fl">
+
+<div id="dialog" class="biaoqian" style="display:none;">
+<div class="bq_nav">
+<div class="tj"><a id="dialog_close" class="but02">x</a></div>
+<form action="{% myurl www.douquan.com www_write_review %}" method="POST">
+<ul>
+<li class="zs">已有<span>110</span>人顶</li>
+<li>标签（多个标签用空格分隔）：</li>
+<li><input type="text" class="input" name="tags"></li>
+<li class="gr">常用标签:</li>
+	<ul class="recommend_tags" id="id_recommend_tags"></ul>
+<li class="clearfix" style="margin-bottom: 10px;"></li>
+<li>简短附注：</li>
+<li>
+  <textarea type="text" class="input01" name="comment"></textarea>
+</li>
+<li class="juzh">
+	<input type="hidden" id="r_act" name="act" value="paid" />
+	<input type="hidden" id="r_deal_id" name="deal_id" value="" />
+	<input type="hidden" id="r_mydeal_id" name="mydeal_id" value="" />
+	<input type="hidden" id="r_type" name="vote" value="0" />
+	<input type="submit" class="baocun" name="submit" value="" /><input id="dialog_cancel" type="button" class="quxiao" name="cancel" />
+</li>
+</ul>
+</form>
+</div>
+</div>
+<div id="warning" class="biaoqian" style="display:none;">
+<div class="bq_nav">
+<div class="tj"><input id="warning_close" type="" class="but02" name=""></div>
+<div id="warning_msg">
+正在载入，请稍等...
+</div>
+</div>
+</div>
+
+
+<div class="fenx">
+   <div class="fenx_lf fl"></div>
+   <div class="fenx_zh fl">
+   <h4>分享到：</h4>
+   <ul class="lie">
+ 		<li><a class="kaixin" href="javascript:d=document;t=d.selection?(d.selection.type!='None'?d.selection.createRange().text:''):(d.getSelection?d.getSelection():'');void(kaixin=window.open('http://www.kaixin001.com/repaste/share.php?&amp;rurl='+escape(d.location.href)+'&amp;rtitle='+escape(d.title)+'&amp;rcontent='+escape(d.title),'kaixin'));kaixin.focus();" title="转贴到开心网">开心</a></li>
+  		<li><a style="padding-left:0px;" name="xn_share" type="icon" href="#">人人</a><script src="http://xnimg.connect.renren.com/js/api/connect/share/share.js" type="text/javascript"></script></li>
+   		<li><a class="doupan" href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()">豆瓣</a></li>
+    	<li><a class="xinlang" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f='http://v.t.sina.com.cn/share/share.php?appkey=3872879766',u=z||d.location,p=['&url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');function%20a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,'','','','','','utf-8'));">新浪微博</a> </li>
+   </ul>
+   </div>
+   <div class="fenx_rt fl"></div>
+</div>
+<div class="nav01 clearfix">
+   <h1><a class="red" href="{% myurl www.douquan.com www_site city.abbreviation deal.site %}">{{ deal.site }}</a>：{{ deal.name }}</h1>
+   <div class="nav01_left fl">
+     <div class="buy">
+       <div class="jian"></div>
+        <p class="jiege"><strong>{{ deal.current_price|floatformat:0 }}</strong>
+          <span><a href="{% myurl www.douquan.com external_url deal.url|base64encode %}" target="_blank"><img width="132" height="51" src="/site_media/images/gom.gif"></a></span>
+        </p>
+     </div>
+     <table class="table">
+      <tbody>
+       <tr>
+       <th>原价</th>
+       <th>折扣</th>
+       <th>节省</th>
+       </tr>
+       <tr>
+       <td>¥{{ deal.original_price|floatformat:0 }}</td>
+        <td>{{ deal.get_discount|floatformat:1 }}折</td>
+         <td>¥{{ deal.get_saving|floatformat:0 }}</td>
+       </tr>
+       </tbody>
+      
+     </table>
+     <div class="sheyu clearfix">
+     {% if deal.get_rest_time.day < 0 or deal.status == 3 %}
+	团购结束于：{{ deal.end_at|date:"Y-m-d " }}{{ deal.end_at|date:"H:i" }}
+	{% else %}
+	剩余时间：{{ deal.get_rest_time.day }}天{{ deal.get_rest_time.hour }}小时{{ deal.get_rest_time.minute }}分钟
+	{% endif %}
+    {% if deal.volunteer != 0 %}
+    <div class="sheyu">
+      <p class="ren"><strong>{{ deal.volunteer }}</strong> 人已购买</p>
+    </div>
+    {% endif %}  
+    <div class="paid">
+    <a href="{% myurl i.douquan.com i_mydeal_add %}?deal_id={{ deal.id }}" title="我买过"><img src="/site_media/images/paid.gif" /></a>   
+    </div>
+     <div class="review clearfix">
+     <span class="r_c god"><a class="red" title="顶" href="javascript:review_dialog('dialog', {{ deal.id }}, '', 0, 'paid')">{{ deal.get_up_vote_count }}</a></span>
+     <span class="r_c bad"><a class="gr" title="踩" href="javascript:review_dialog('dialog', {{ deal.id }}, '', 1, 'paid')">{{ deal.get_dw_vote_count }}</a></span>
+     <span class="r_c liuyan"><a class="blue" title="查看评论" href="{% myurl www.douquan.com www_deal_comment city.abbreviation deal.id %}">{{ deal.get_comments_count }}</a></span>
+     </div>    
+     </div>
+     
+     <div class="cl"></div>
+   </div><!--nav01_left结束-->
+   <div class="nav_right">
+       <div class="pic01"><img width="440" height="280" src="http://img.douquan.com{{ deal.logo }}"></div>
+       <div class="pic01_xia">
+       <p class="lf_yih fl"></p>
+       <p class="pic_zh fl">此团购信息来自<a class="red" href="{% myurl www.douquan.com www_site city.abbreviation deal.site.name %}">{{ deal.site.name }}</a>网~~</p>
+       <p class="rt_yih fl"></p>
+       </div>
+   </div>
+</div>
+<div class="cl"></div>
+<div class="new">
+<p class="xiangxi_sh"></p>
+<div class="xiangxi_zh clearfix">
+<div class="xiangxi_zh_lf fl">
+{{ deal.detail|img_replace|safe }}
+</div>
+<div class="xiangxi_zh_rt fl">
+  <p>{{ deal.company_name|safe }}</p>
+{{ deal.company_detail|img_replace|safe }}
+</div>
+</div>
+<div class="cl"></div>
+<p class="xiangxi_xia"></p>
+</div>
+
+<!-- 
+<a href="{% myurl www.douquan.com www_deal city.abbreviation deal.id %}">{{ deal.name }}</a>
+<a href="{% myurl www.douquan.com www_category city.abbreviation deal.category.id %}">{{ deal.category.name }}</a>
+local:
+{% for local in deal.local.values %}
+<a href="{% myurl www.douquan.com www_local city.abbreviation local.name %}">{{ local.name }}</a>
+{% endfor %}
+{% if deal.tags %}
+<p>Tags:
+{% load tagging_tags %}
+{% tags_for_object deal as tags %}
+{% for tag in tags %}
+<a href="{% myurl www.douquan.com www_tag city.abbreviation tag.id %}">{{ tag }}</a>
+{% endfor %}
+</p>
+{% endif %}
+<a href="{% myurl www.douquan.com www_site city.abbreviation deal.site.name %}">{{ deal.site.name }}</a>
+{% for company in deal.companies.values %}
+<a href="{% myurl www.douquan.com www_company city.abbreviation company.id %}">{{ company.name }}</a>
+{% endfor %}
+<a href="{% myurl www.douquan.com www_deal_transfer city.abbreviation deal.id %}?type=1">我要转让</a>
+<a href="{% myurl www.douquan.com www_deal_transfer city.abbreviation deal.id %}?type=2">我要求购</a>
+-->
+</div>
+<div class="center_rt01 mg_lf10 fl">
+<h4 class="yonghu">用户评论区<span class="duo"><a href="{% myurl www.douquan.com www_deal_comment city.abbreviation deal.id %}">更多</a></span></h4>
+<div class="diqu01">
+<div class="shu01">
+<div class="pl">
+<form action="/{{ city.abbreviation }}/write_comment/" method="post" id="commentform" onsubmit="return chk_form('id_replay')">
+<p><img width="28" height="17" src="/media/images/pl_02.gif"></p>
+<p>
+  <textarea class="navinput" name="replay" id="id_replay" maxlength="255"></textarea>
+</p>
+<p class="batt">{{ form.deal }}<input type="submit" class="btn01" name="submit" value=""/></p>
+<div class="clearfix"></div>
+</div>
+</form>
+</div>
+{% load string %}
+{% deal_comments deal.id comments %}
+{% for comment in comments %}
+<div class="shu02">
+“{{ comment.replay|cutChinese:60 }}”<span><a class="gr" href="{% myurl i.douquan.com i_user comment.user.id %}">&mdash;&mdash;{{ comment.user.name }}</a></span>
+</div>
+{% if not forloop.last %}
+<p class="line01"></p>
+{% endif %}
+{% endfor %}
+<p class="yonghu_xia"></p>
+
+
+</div><!--center_rt结束-->
+</div>
+
+<div class="center_rt01 mg_lf10 fl mg_top10">
+<h4 class="yonghu"><a href="{% myurl www.douquan.com www_category city.abbreviation deal.category.id %}">{{ deal.category.name }}相关团购</a></h4>
+<div class="diqu01">
+<div class="shu01">
+<ul>
+{% category_deals city.id deal.category deal.id category_deals %}
+{% for d in category_deals %}
+<li><a title="{{ d.name }}" href="{% myurl www.douquan.com www_deal city.abbreviation d.id %}">[{{ d.site.name }}]{{ d.name }}</a></li>
+{% endfor %}
+</ul>
+</div>
+<p class="yonghu_xia"></p>
+</div><!--center_rt结束-->
+</div>
+
+</div>
+{% endblock %}
+
+{% block run_script %}
+<script type="text/javascript">
+{% if is_login %}
+var is_login = 1;
+{% else %}
+var is_login = 0;
+{% endif %}
+require_login('id_replay');
+</script>
+{% endblock %}

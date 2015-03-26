@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load base %}
+{% load deal_tag %}
+
+{% load tabs %}
+{% block navigation %}
+{% ifequal deal.status 1 %}
+{% activetab "topnav" "current" %}
+{% else %}
+{% activetab "topnav" "history" %}
+{% endifequal %}
+{{ block.super }}
+{% endblock %}
+{% block title %}
+<title>评论-{{ deal.name }}-{{ city.name }}都全网</title>
+{% endblock %}
+
+{% block mainbody %}
+<div class="center clearfix">
+<div class="center02 fl">
+<div class="pinglun_top"></div>
+<div class="pinglun_zh">
+  <h4><a title="{{ deal.name }}" class="lianjie" href="{% myurl www.douquan.com www_deal city.abbreviation deal.id %}"><span>{{ deal.site }}：</span>{{ deal.name }}</a></h4>
+  <div class="pinglun_sy">
+  <ul>
+  <li>所有评论</li>
+  <li class="fb"><a class="red" href="#1">【发表评论】</a></li>
+  </ul>
+  </div>
+  {% for comment in comments %}
+  <div class="yonghu01">
+  <ul>
+  <li><a class="black" href="{% myurl i.douquan.com i_user comment.user.id %}">{{ comment.user }}</a></li>
+  <li class="time">{{ comment.created_at|date:"Y年m月d日 " }}</li>
+  </ul>
+  <p class="jianjie">{{ comment.replay }}</p>
+  <p class="pl_line01"></p>
+  </div>
+  {% endfor %}
+     <div class="yonghu01">
+  <ul>
+  <li class="red"><a id="1" name="1"></a>我要评论</li>
+  </ul>
+	<form action="{% myurl www.douquan.com www_write_comment city.abbreviation %}" method="post" id="commentform" onsubmit="return chk_form('replay')">
+		<p class="cl"><textarea class="input" name="replay" id="replay"></textarea>{{ form.deal }}</p>
+		<p class="anniu"><input type="submit" class="bat" name="submit" value=""></p>
+	</form>
+  </div>                                
+</div>
+<div class="zhuce_xia"></div>
+</div>
+
+<div class="center_rt01 mg_lf10 fl">
+<h4 class="yonghu"><a href="{% myurl www.douquan.com www_category city.abbreviation deal.category.id %}">{{ deal.category.name }}相关团购</a></h4>
+<div class="diqu01">
+<div class="shu01">
+<ul>
+{% category_deals city.id deal.category deal.id category_deals %}
+{% for d in category_deals %}
+<li><a href="{% myurl www.douquan.com www_deal city.abbreviation d.id %}">[{{ d.site.name }}]{{ d.name }}</a></li>
+{% endfor %}
+</ul>
+</div>
+<p class="yonghu_xia"></p>
+</div><!--center_rt结束-->
+</div>
+</div>
+{% endblock %}
+{% block run_script %}
+<script type="text/javascript">
+{% if is_login %}
+var is_login = 1;
+{% else %}
+var is_login = 0;
+{% endif %}
+require_login('replay');
+</script>
+{% endblock %}

@@ -1,0 +1,58 @@
+	{% load base %}
+	<div class="center_lf fl mg_top10">
+	<p class="bian_lf fl"></p>
+	<div class="bian_zh fl">
+		<div class="pic fl mg_top10"><img width="242" height="147" src="http://img.douquan.com{{ deal.logo }}?height=150"></div>	
+		<div class="jiage fl">
+		   <p class="tl"><a title="{{ deal.name }}" target="_blank" href="{% myurl www.douquan.com www_deal city.abbreviation deal.id %}"><span>{{ deal.site }}：</span>{{ deal.name }}</a></p>
+		   <p class="bq">
+		   {% if deal.category == None %}
+		   分类：无
+		   {% else %}
+		   分类：<a title="{{ deal.category|default:"" }}" target="_blank" href="{% myurl www.douquan.com www_category city.abbreviation deal.category.id %}">{{ deal.category|default:"无" }}</a>
+		   {% endif %}
+		   {% if deal.tags %}
+		   {% load tagging_tags %}
+		   {% tags_for_object deal as tags %}
+		    <span>标签：
+		   {% for tag in tags %}
+			<a title="{{ tag.name }}" target="_blank" href="{% myurl www.douquan.com www_tag city.abbreviation tag.id %}">{{ tag }}</a>
+		   {% endfor %}
+		   </span>
+		   {% endif %}
+		   </p>
+			<div class="Pjia">
+			<ul>
+			<li class="info_price">
+				<span>现价：<em class="c_price red">¥{{ deal.current_price }}</em></span>
+				<span>原价：¥{{ deal.original_price }}</span>
+				<span>折扣：{{ deal.get_discount|floatformat:1 }}折</span>
+			</li>
+			<li class="info_time">
+			<span>
+			{% if deal.get_rest_time.day < 0 or deal.status == 3 %}
+				团购已结束
+			{% else %}
+				剩余时间：{{ deal.get_rest_time.day }}天{{ deal.get_rest_time.hour }}小时{{ deal.get_rest_time.minute }}分钟
+			{% endif %}
+			</span>
+			{% if deal.volunteer != 0 %}
+			<span>已有<b class="red">{{ deal.volunteer }}</b>人购买</span>
+			{% endif %}
+			</li>
+			<li class="info_review">
+				<span class="r_c god"><a class="red" title="顶" href="javascript:review_dialog('dialog', {{ deal.id }}, '', 0, 'paid')">{{ deal.get_up_vote_count }}</a></span>
+				<span class="r_c bad"><a class="gr" title="踩" href="javascript:review_dialog('dialog', {{ deal.id }}, '', 1, 'paid')">{{ deal.get_dw_vote_count }}</a></span>
+				<span class="r_c liuyan"><a class="blue" title="查看评论" target="_blank" href="{% myurl www.douquan.com www_deal_comment city.abbreviation deal.id %}">{{ deal.get_comments_count }}</a></span>
+				{% if deal.get_rest_time.day < 0 or deal.status == 3 %}
+				{% else %}
+			    <span class="butt"><a class="but" target="_blank" href="{% myurl www.douquan.com external_url deal.url|base64encode %}">立即购买</a></span>
+			    {% endif %}
+			</li>
+			</ul>
+			</div>		   
+		   
+		</div>
+	</div>
+	<p class="bian_rt fl clearfix"></p>
+	</div>

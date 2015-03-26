@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load base %}
+
+{% block mainbody %}
+<div class="center clearfix">
+<div class="center02 fl">
+<!--center_lf结束-->
+<div class="zhuce_sh">请登录</div>
+	<div class="zhuce_zh">
+	<form method="POST" action="" id="register_form">
+ 	<div class="zhuce_lie">								
+		<label for="">Email</label>
+		<input size="30" name="email" id="id_email" class="input_02" value="" type="text">
+	</div>
+	<div class="cl"></div>
+	<div class="zhuce_lie mg_top20">								
+		<label for="">密码</label>
+		<input size="30" name="password" id="id_password" class="input_02" value="" type="password">
+		{% if form.errors %}
+		<h3><a href="#">用户名或密码错误</a></h3>
+		{% endif %}
+	</div>
+    <div class="cl"></div>
+	<div class="zhuce_lie mg_top20">
+		<span class="bat">
+			<input name="remember" id="id_remember" value="" class="jizhu" type="checkbox"> <label for="" class="jizi">下次自动登录</label>
+			<label class="jizi01" for=""><a href="#">忘记密码?</a></label>
+		</span>
+		
+	</div>
+	<div class="cl"></div>
+	<div class="zhuce_lie mg_top25">
+		<span class="bat">{{ form.goto }}<input name="" class="bat01" value="登录" type="submit"></span>
+	</div>
+	</form>
+	</div>
+	<div class="zhuce_xia"></div>
+</div>
+<div class="center_rt01 mg_lf10 fl">
+<div class="zhc_sh"></div>
+<div class="zhc_zh">
+<h2>还没有都全帐户？</h2>
+<p class="mg_top10">请直接 <span><a href="{% myurl passport.douquan.com passport_register %}?goto={{ request.GET.goto|default:request.current_url|urlencode }}">注册</a></span>仅需30秒！</p>
+</div>
+<div style="width: 249px; height: 12px; background: url(/site_media/images/zhuce_xia.gif) no-repeat scroll 0% 0% transparent;"></div>
+</div>
+</div>
+
+<script src="http://rest.kaixin001.com/api/FeatureLoader_js.php" type="text/javascript"></script>
+<a id="kx001_btn_login" ></a>
+<script type="text/javascript">
+KX001.init("280537553726ff68690a64464882729e", "/kx001_receiver.html","用开心网账号登录");
+</script>
+{% endblock %}

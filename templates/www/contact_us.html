@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load base %}
+
+{% block mainbody %}
+<div class="center clearfix">
+
+<div class="my_container">
+	<div class="subject">
+		<span>联系我们</span>
+	</div>
+<div class="add_form">
+<form action="" method="POST">
+<div class="row">
+<label>标题</label>{{ form.title }}
+{% if form.title.errors %}
+<div class="error gr">{{ form.title.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>内容</label>{{ form.content }}
+{% if form.content.errors %}
+<div class="error gr">{{ form.content.errors }}</div>
+{% endif %}
+</div>
+<div class="clearfix"></div>
+<div class="row" style="margin-top: 20px">
+<input type="submit" value="提交" class="bat01" style="margin-left: 80px;"/>
+{% ifequal result 1 %}
+<div class="msg">信息已提交成功，感谢您的支持！</div>
+{% endifequal %}
+</div>
+</form>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

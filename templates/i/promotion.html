@@ -1,0 +1,13 @@
+{% load base %}
+promotion
+{% for deal in deals %}
+{% if deal.site in promotion_sites %}
+{% for key, value in promotion_links %}
+{% if deal.site.id == key %}
+<a href="{% myurl www.douquan.com external_url value|base64encode %}">{{ deal.name }}</a>
+{% endif %}
+{% endfor %}
+{% else %}
+<a href="{% myurl www.douquan.com external_url deal.site.default_promotion|base64encode %}">{{ deal.name }}</a>
+{% endif %}
+{% endfor %}

@@ -1,0 +1,25 @@
+{% extends "base_sns.html" %}
+
+{% load pagination_tags %}
+{% load cache %}
+{% block mainbody %}
+<div class="center clearfix">
+<div class="center01 fl">
+	{% include 'kaixin001/deal_nav_snippet.html' %}
+	
+	{% ifnotequal status 1 %}
+	{% autopaginate deals 20 %}
+	{% endifnotequal %}
+	
+	{% for deal in deals %}
+	{% cache 900 kaixin001_deal_snippet deal.id %}
+	{% include 'kaixin001/deal_snippet.html' %}
+	{% endcache %}
+	{% endfor %}
+	
+	{% ifnotequal status 1 %}
+	{% paginate %}
+	{% endifnotequal %}
+</div>
+</div>
+{% endblock %}

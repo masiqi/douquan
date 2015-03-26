@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load base %}
+
+{% load tabs %}
+{% block navigation %}
+{% activetab "topnav" "mydeal" %}
+{{ block.super }}
+{% endblock %}
+
+{% block mainbody %}
+<div class="center clearfix">
+<div class="my_container">
+	<div class="subject">
+		<span>添加我的团购</span>
+	</div>
+<div class="add_form">
+{% if form.price %}
+<form action="" method="POST">
+<div class="row">
+<label>团购标题</label>{{ form.name }}
+{% if form.name.errors %}
+<div class="error gr">{{ form.name.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>团购网址</label>{{ form.url }}
+{% if form.url.errors %}
+<div class="error gr">{{ form.url.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>网站名称</label>{{ form.site }}
+{% if form.site.errors %}
+<div class="error gr">{{ form.site.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>买入价格</label>{{ form.price }}
+{% if form.price.errors %}
+<div class="error gr">{{ form.price.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>买入帐号</label>{{ form.account }}
+{% if form.account.errors %}
+<div class="error gr">{{ form.account.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>隐私</label>{{ form.type }}
+{% if form.type.errors %}
+<div class="error gr">{{ form.type.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>是否已使用</label>{{ form.status }}
+{% if form.status.errors %}
+<div class="error gr">{{ form.status.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>使用日期</label>{{ form.used_at }}
+{% if form.used_at.errors %}
+<div class="error gr">{{ form.used_at.errors }}</div>
+{% endif %}
+<div class="tips gr">例如：2010-07-01</div>
+</div>
+<div class="row">
+<label>是否有期限</label>{{ form.limit }}
+{% if form.limit.errors %}
+<div class="error gr">{{ form.limit.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>有效期</label>{{ form.deadline }}
+{% if form.deadline.errors %}
+<div class="error gr">{{ form.deadline.errors }}</div>
+{% endif %}
+<div class="tips gr">例如：2010-07-01</div>
+</div>
+<div class="row">
+<label>预约时间</label>{{ form.reserve }}
+{% if form.reserve.errors %}
+<div class="error gr">{{ form.reserve.errors }}</div>
+{% endif %}
+<div class="tips gr">例如：2010-07-01</div>
+</div>
+<div class="clearfix"></div>
+<div class="row" style="margin-top: 20px">
+{{ form.deal }}
+{{ form.step }}
+<input type="submit" value="保存" class="bat01" style="margin-left: 80px;"/>
+</div>
+</form>
+{% else %}
+<form action="" method="POST">
+<div class="row">
+<label>团购标题</label>{{ form.name }}
+{% if form.name.errors %}
+<div class="error gr">{{ form.name.errors }}</div>
+{% endif %}
+</div>
+<div class="row">
+<label>团购网址</label>{{ form.url }}
+{% if form.url.errors %}
+<div class="error gr">{{ form.url.errors }}</div>
+{% endif %}
+</div>
+<div class="clearfix"></div>
+<div class="row" style="margin-top: 20px">
+{{ form.step }}
+<input type="submit" value="下一步" class="bat01" style="margin-left: 80px;"/>
+</div>
+</form>
+{% endif %}
+{% if deal_suggests %}
+	<div class="subject" style="margin-top: 20px;">
+		<span>您是否在寻找以下团购？</span>
+	</div>
+<div class="info">
+为了提高信息的准确性，请您在以下推荐的列表中选择您打算添加的团购。如果未找到，您可以继续填写上面的表单。
+</div>
+<ul class="suggest_list">
+{% for deal_suggest in deal_suggests %}
+<li><a class="red" href="{% myurl www.douquan.com www_site city.abbreviation deal_suggest.site %}">【{{ deal_suggest.site.name }}】</a><a class="blue" href="{% myurl i.douquan.com i_mydeal_add %}?deal_id={{ deal_suggest.id }}">{{ deal_suggest.name }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+</div>
+</div>
+</div>
+{% endblock %}

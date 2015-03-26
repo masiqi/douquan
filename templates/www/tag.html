@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% load base %}
+{% load deal_tag %}
+{% load pagination_tags %}
+
+{% block feed %}
+<link href="{% myurl www.douquan.com feed_tag city.abbreviation tag.id %}" rel="alternate" title="订阅更新" type="application/rss+xml" />
+{% endblock %}
+
+{% block title %}
+<title>{{ tag.name }}团购、打折、优惠券信息-都全团购网{{ city.name }}站</title>
+{% endblock %}
+
+{% block keywords %}
+<meta name="keywords" content="{{ tag.name }}团购, {{ tag.name }}打折,{{ tag.name }}优惠券,都全团购网{{ city.name }}站" />
+{% endblock %}
+
+{% block description %}
+<meta name="description" content="都全团购网北京站为您提供{{ tag.name }}团购、打折、优惠券相关信息，{{ tag.name }}团购内容丰富，折扣超低，更多{{ tag.name }}精品团购优惠内容，尽在都全团购网{{ city.name }}站" />
+{% endblock %}
+
+{% block mainbody %}
+<div class="center clearfix">
+	<div class="center01 fl">
+<div class="soso">
+<div class="nav_rt">
+<ul>
+{% if order != None %}
+
+{% ifequal order "current_price" %}
+<li class="jiage"><a class="black act_down" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=-current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="black" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% ifequal order "-current_price" %}
+<li class="jiage"><a class="black act_up" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="black" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% ifequal order "volunteer" %}
+<li class="jiage"><a class="black" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="black act_down" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=-volunteer"><span>销量</span></a></li>
+{% endifequal %}
+{% ifequal order "-volunteer" %}
+<li class="jiage"><a class="black" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="black act_up" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=volunteer"><span>销量</span></a></li>
+{% endifequal %}
+
+{% else %}
+<li class="jiage"><a class="black" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=current_price"><span>价格</span></a></li>
+<li class="xiaol"><a class="black" href="{% myurl www.douquan.com www_tag city.abbreviation|default:"bj" tag.id %}?order=volunteer"><span>销量</span></a></li>
+{% endif %}
+</ul>
+</div>
+<div style="clear:both;"></div>
+</div>
+
+	{% autopaginate deals 20 %}
+	{% for deal in deals %}
+	{% include 'www/deal_snippet.html' %}
+	{% endfor %}
+	{% paginate %}
+	</div>
+	<div class="center_rt mg_lf10 fl">
+	<p class="rem_lf">热门地点</p>
+	<div class="diqu"><div class="shu">
+	{% city_locals city.id locals %}
+	{% for local in locals %}
+	<a href="{% myurl www.douquan.com www_local city.abbreviation local %}">{{ local.name }}</a>
+	{% endfor %}
+	</div></div>
+	<p class="rem_rt"></p>
+	</div>
+	<div class="center_rt mg_lf10 fl mg_top10">
+	<p class="rem_lf">分类</p>
+	<div class="diqu"><div class="shu">
+	{% categories categories %}
+	{% for category in categories %}
+	<a href="{% myurl www.douquan.com www_category city.abbreviation category.id %}">{{ category.name }}[{{ category.deal_count }}]</a>
+	{% endfor %}
+	</div></div>
+	<p class="rem_rt"></p>
+	</div>
+	<div class="center_rt mg_lf10 fl mg_top10">
+	<p class="rem_lf">标签</p>
+	<div class="diqu"><div class="shu">
+	{% tags tags%}
+	{% for tag in tags %}
+	<a href="{% myurl www.douquan.com www_tag city.abbreviation tag.id %}">{{ tag.name }}</a>
+	{% endfor %}
+	</div></div>
+	<p class="rem_rt"></p>
+	</div>
+</div>
+{% endblock %}

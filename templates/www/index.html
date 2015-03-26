@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% load base %}
+{% load deal_tag %}
+{% load pagination_tags %}
+{% load cache %}
+
+{% block feed %}
+<link href="{% myurl www.douquan.com feed_deals city.abbreviation %}" rel="alternate" title="订阅最新{{ city.name }}团购信息" type="application/rss+xml" />
+{% endblock %}
+
+{% block style %}
+<style type="text/css">
+body {
+_background-image: url(about:blank);     /*用浏览器空白页面作为背景*/
+_background-attachment: fixed;             /* prevent screen flash in IE6 确保滚动条滚动时，元素不闪动*/
+}
+</style>
+{% endblock %}
+
+{% load string %}
+{% load tabs %}
+{% block navigation %}
+{% ifequal status 1 %}
+{% activetab "topnav" "current" %}
+{% else %}
+{% activetab "topnav" "history" %}
+{% endifequal %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}
+<title>都全团购网{{ city.name }}站-分享都全分享快乐</title>
+{% endblock %}
+
+{% block keywords %}
+<meta name="keywords" content="都全网{{ city.name }}站,{{ city.name }}团购,{{ city.name }}打折,{{ city.name }}优惠券" />
+{% endblock %}
+
+{% block description %}
+<meta name="description" content="都全网{{ city.name }}站致力于提供{{ city.name }}精品团购、促销、打折消费信息，每天提供精选的{{ city.name }}餐饮、休闲、娱乐等特色商家，只要人数达到最低团购人数，就能享受都全网为你提供的超低折扣，丰富的团购信息，尽在都全网{{ city.name }}站。" />
+{% endblock %}
+
+{% block mainbody %}
+<div class="center clearfix">
+	<div class="center01 fl">
+	
+<div id="dialog" class="biaoqian" style="display:none;">
+<div class="bq_nav">
+<div class="tj"><a id="dialog_close" class="but02">x</a></div>
+<form action="{% myurl www.douquan.com www_write_review %}" method="POST">
+<ul>
+<li class="zs">已有<span>110</span>人顶</li>
+<li>标签（多个标签用空格分隔）：</li>
+<li><input type="text" class="input" id="id_tags" name="tag"></li>
+<li class="gr">常用标签:</li>
+	<ul class="recommend_tags" id="id_recommend_tags"></ul>
+<li class="clearfix" style="margin-bottom: 10px;"></li>
+<li>简短附注：</li>
+<li>
+  <textarea type="text" class="input01" name="comment"></textarea>
+</li>
+<li class="juzh">
+	<input type="hidden" id="r_act" name="act" value="paid" />
+	<input type="hidden" id="r_deal_id" name="deal_id" value="" />
+	<input type="hidden" id="r_mydeal_id" name="mydeal_id" value="" />
+	<input type="hidden" id="r_type" name="vote" value="0" />
+	<input type="submit" class="baocun" name="submit" value="" /><input id="dialog_cancel" type="button" class="quxiao" name="cancel" />
+</li>
+</ul>
+</form>
+</div>
+</div>
+<div id="warning" class="biaoqian" style="display:none;">
+<div class="bq_nav">
+<div class="tj"><input id="warning_close" type="" class="but02" name=""></div>
+<div id="warning_msg">
+正在载入，请稍等...
+</div>
+</div>
+</div>	
+	
+	{% include 'www/deal_nav_snippet.html' %}
+	
+	{% ifnotequal status 1 %}
+	{% autopaginate deals 20 %}
+	{% endifnotequal %}
+	
+	{% for deal in deals %}
+	{% cache 900 deal_snippet deal.id %}
+	{% include 'www/deal_snippet.html' %}
+	{% endcache %}
+	{% endfor %}
+	
+	{% ifnotequal status 1 %}
+	{% paginate %}
+	{% endifnotequal %}
+	</div>
+	<div class="center_rt mg_lf10 fl">
+	<h4 class="rem_lf">分类</h4>
+	<div class="diqu"><div class="shu">
+	{% categories categories %}
+	{% for category in categories %}
+	<a href="{% myurl www.douquan.com www_category city.abbreviation category.id %}">{{ category.name }}[{{ category.deal_count }}]</a>
+	{% endfor %}
+	</div></div>
+	<p class="rem_rt"></p>
+	</div>
+	<div class="center_rt mg_lf10 fl mg_top10">
+	<h4 class="rem_lf">标签</h4>
+	<div class="diqu"><div class="shu">
+	{% tags tags%}
+	{% for tag in tags %}
+	<a href="{% myurl www.douquan.com www_tag city.abbreviation tag.id %}">{{ tag.name }}</a>
+	{% endfor %}
+	</div></div>
+	<p class="rem_rt"></p>
+	</div>
+	<div class="center_rt01 mg_lf10 fl mg_top10">
+	<h4 class="yonghu">最新评论</h4>
+	<div class="diqu01">
+	<div class="comment_list">
+	<ul>
+	{% cache 900 index_comments city.abbreviation %}
+	<!-- {{ city.abbreviation }} -->
+	{% for comment in comments %}
+	<li><a class="bluew" title="{{ comment.replay }}" href="{% myurl www.douquan.com www_deal_comment city.abbreviation comment.deal.id %}">[{{ comment.deal.site.name }}] {{ comment.replay|cutChinese:40 }}</a><span class="gr" style="margin-left: 10px;"><a class="gr" href="{% myurl i.douquan.com i_user comment.user.id %}">--{{ comment.user.name }}</a></span></li>
+	{% endfor %}
+	{% endcache %}
+	</ul>
+	</div>
+	<p class="yonghu_xia"></p>
+	</div><!--center_rt结束-->
+	</div>	
+</div>
+{% endblock %}

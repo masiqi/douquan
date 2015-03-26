@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load base %}
+
+{% block mainbody %}
+<div class="center clearfix">
+<div class="my_container">
+	<div class="subject">
+		<span>{{ user.name }}的团购</span>
+	</div>
+<table class="deal_list">
+<colgroup>
+    <col width="50%">
+    <col width="25%">
+    <col width="25%">
+</colgroup>
+{% for mydeal in mydeals %}
+<tr>
+<td class="title">
+	{% if mydeal.deal %}
+	<a class="red" title="{{ mydeal.deal.site.name }}" href="{% myurl www.douquan.com www_site mydeal.deal.get_main_city.abbreviation mydeal.deal.site %}">【{{ mydeal.deal.site.name }}】</a>
+	<a class="bluew" title="{{ mydeal.name }}" href="{% myurl www.douquan.com www_deal city.abbreviation mydeal.deal.id %}">{{ mydeal.name }}</a>
+	{% else %}
+	<span class="red">【{{ mydeal.site }}】</span>
+	<span class="bluew">{{ mydeal.name }}</span>
+	{% endif %}
+</td>
+<td class="gr">买入价：{{ mydeal.price }} 元</td>
+<td class="gr">{{ mydeal.created_at|date:"Y-m-d" }}</td>
+</tr>
+{% endfor %}
+</table>
+{% if is_owner %}
+<a href="{% myurl i.douquan.com i_bind %}">绑定帐号</a>
+{% endif %}
+</div>
+</div>
+{% endblock %}

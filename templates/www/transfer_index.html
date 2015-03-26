@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load base %}
+
+
+{% block mainbody %}
+<div class="center clearfix">
+<div class="my_container">
+	<div class="subject">
+		<span>二手团购</span>
+		<a class="red" href="{% myurl www.douquan.com www_deal_transfer_add city.abbreviation %}">我要求购\转让</a>
+	</div>
+<table class="deal_list">
+<colgroup>
+	<col width="5%">
+    <col width="49%">
+    <col width="8%">
+    <col width="5%">
+    <col width="8%">
+    <col width="10%">
+    <col width="15%">
+</colgroup>
+<tr>
+<th></th>
+<th>标题</th>
+<th>价格</th>
+<th>状态</th>
+<th>回复</th>
+<th>昵称</th>
+<th>时间</th>
+</tr>
+{% for transfer in transfers %}
+<tr>
+	<td>
+	{% ifequal transfer.type 1 %}
+	<img src="/site_media/images/t_sell.gif" />
+	{% else %}
+	<img src="/site_media/images/t_buy.gif" />
+	{% endifequal %}
+	</td>
+	<td class="title"><a class="bluew" href="{% myurl www.douquan.com www_transfer city.abbreviation transfer.id %}">{{ transfer.name }}</a></td>
+	<td class="red">{{ transfer.price }}</td>
+	<td class="gr">
+		{% ifequal transfer.status 1 %}
+		进行中
+		{% else %}
+		结束
+		{% endifequal %}
+	</td>
+	<td class="gr">0</td>
+	<td><a class="bluew" href="{% myurl i.douquan.com i_user transfer.user.id %}">{{ transfer.user.name }}</a></td>
+	<th>{{ transfer.created_at|date:"Y-m-d" }}</th>
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,1 @@
+kill -9 `ps auwx|grep manage|grep runfcgi|grep 3036|awk '{print $2}'`;rm `find . -name "*.pyc"`;python ./manage.py runfcgi method=prefork host=127.0.0.1 port=3036 outlog=/tmp/django.out errlog=/tmp/django.err minspare=2 --setting=server

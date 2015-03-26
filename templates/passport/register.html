@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load base %}
+
+{% block mainbody %}
+<div class="center clearfix">
+<div class="center02 fl">
+<!--center_lf结束-->
+<div class="zhuce_sh">请注册</div>
+<div class="zhuce_zh">
+	<form method="POST" action="" id="register_form">
+	<div class="zhuce_lie">								
+		<label for="">Email</label>
+		<input size="30" name="email" id="id_email" class="input_01" value="" type="text">
+		{% if form.email.errors %}
+		<h4><a href="#">Email格式不对</a></h4>
+		{% endif %}		
+		<span class="zi">登录及找回密码用，不会公开</span>
+	</div>
+	<div class="cl"></div>
+	<div class="zhuce_lie mg_top20">								
+		<label for="">用户名</label>
+		<input size="30" name="name" id="id_name" class="input_01" value="" type="text">
+		{% if form.name.errors %}
+		<h3><a href="#">用户名 4-16 个字符</a></h3>
+		{% endif %}		
+		<span class="zi">4-16 个字符，一个汉字为两个字符</span>
+	</div>
+	<div class="cl"></div>
+	<div class="zhuce_lie mg_top20">								
+		<label for="">密码</label>
+		<input size="30" name="password" id="id_password" class="input_01" value="" type="password">
+		{% if form.password.errors %}
+		<h3><a href="#">密码最少 4 个字符</a></h3>
+		{% endif %}
+		<span class="zi">最少 4 个字符</span>
+	</div>
+	<div class="cl"></div>
+	<div class="zhuce_lie mg_top25">
+		<span class="bat">{{ form.goto }}<input name="" class="bat01" value="注册" type="submit"></span>
+	</div>
+	</form>
+</div>
+<div class="zhuce_xia"></div>
+</div>
+<div class="center_rt01 mg_lf10 fl">
+<div class="zhc_sh"></div>
+<div class="zhc_zh">
+<h2>已有都全帐户？</h2>
+<p class="mg_top10">请直接 <span><a style="border-bottom: 1px solid rgb(0, 102, 204);" href="{% myurl passport.douquan.com passport_login %}?goto={{ request.GET.goto|default:request.current_url|urlencode }}" class="">登录</a></span></p>
+</div>
+<div style="width: 249px; height: 12px; background: url(&quot;/site_media/images/zhuce_xia.gif&quot;) no-repeat scroll 0% 0% transparent;"></div>
+</div>
+</div>
+{% endblock %}

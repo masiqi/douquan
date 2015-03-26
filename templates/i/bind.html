@@ -1,0 +1,12 @@
+{% load base %}
+bind
+{% for promotion in promotions %}
+<li>
+{{ promotion.name }} | 
+{% if promotion.promotion %}
+<input value="{{ promotion.promotion }}" />修改
+{% else %}
+<input value="" />添加|没有{{promotion.name}}帐号?点此<a href="{% myurl www.douquan.com external_url promotion.default_promotion|base64encode %}">快捷注册</a>
+{% endif %}
+</li>
+{% endfor %}
